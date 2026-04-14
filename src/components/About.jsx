@@ -33,16 +33,29 @@ export default function About() {
                transition={{ duration: 0.8 }}
              >
                <h2 className="text-sm font-mono text-primary uppercase tracking-widest mb-10">The Genesis</h2>
-               <p className="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tighter mb-12 mix-blend-difference">
-                 I architect systems that bridge the physical and digital world. From building full-stack platforms for heavy industry to intelligent hardware for accessibility.
+               <p className="text-3xl md:text-4xl lg:text-5xl font-medium leading-[1.2] tracking-tighter mb-12 mix-blend-difference">
+                 Motivated MCA student with a strong foundation in software development. Skilled in building real-world applications through academic projects and passionate about applying technical skills.
                </p>
              </motion.div>
 
-             <div className="grid sm:grid-cols-3 gap-8 border-t border-white/10 pt-10">
-               <Stat number="03" label="Major Releases" delay={0.1} />
-               <Stat number="02" label="Core Domains" delay={0.2} />
-               <Stat number="0∞" label="Lines Written" delay={0.3} />
-             </div>
+             <motion.div 
+               initial={{ opacity: 0, y: 30 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ duration: 0.6, delay: 0.2 }}
+               className="grid sm:grid-cols-2 gap-8 border-t border-white/10 pt-10"
+             >
+               <div>
+                  <h3 className="text-secondary font-mono text-xs uppercase tracking-widest mb-3">Post-Graduation</h3>
+                  <h4 className="text-xl font-bold font-heading text-white">Master of Computer Application</h4>
+                  <p className="text-textMuted text-sm mt-1">Amal Jyothi College of Engineering Autonomous, Kanjirapally</p>
+               </div>
+               <div>
+                  <h3 className="text-secondary font-mono text-xs uppercase tracking-widest mb-3">Under-Graduation</h3>
+                  <h4 className="text-xl font-bold font-heading text-white">Bachelor of Commerce</h4>
+                  <p className="text-textMuted text-sm mt-1">St Dominic's College, Kanjirapally</p>
+               </div>
+             </motion.div>
           </div>
           
         </div>

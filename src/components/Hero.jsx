@@ -75,16 +75,21 @@ export default function Hero() {
           className="mt-16 flex flex-col md:flex-row gap-8 items-center"
         >
           <p className="text-textMuted max-w-sm text-sm md:text-base font-medium font-mono text-center md:text-left leading-relaxed">
-            I engineer elite, physics-driven web experiences and 
-            robust software solutions using the cutting edge of modern technology.
+            Motivated MCA student with a strong foundation in software development, problem-solving, and database management. Passionate about learning and building impactful tech.
           </p>
           
           <div className="h-px w-16 bg-white/20 hidden md:block" />
 
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <a data-hoverable="true" href="#projects" className="relative group overflow-hidden rounded-full p-px bg-gradient-to-b from-white/20 to-white/0">
               <div className="inline-block px-8 py-4 rounded-full bg-background group-hover:bg-primary/10 transition-colors uppercase tracking-widest text-xs font-bold">
                 See The Work
+              </div>
+            </a>
+            
+            <a data-hoverable="true" href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="relative group overflow-hidden rounded-full p-px bg-gradient-to-b from-primary/50 to-primary/0">
+              <div className="inline-block px-8 py-4 rounded-full bg-background group-hover:bg-primary/10 text-primary transition-colors uppercase tracking-widest text-xs font-bold">
+                Download Resume
               </div>
             </a>
           </div>

@@ -11,8 +11,8 @@ export default function Skills() {
   const x1 = useTransform(scrollYProgress, [0, 1], [0, -500]);
   const x2 = useTransform(scrollYProgress, [0, 1], [-500, 0]);
 
-  const row1 = ['React Ecosystem', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Flutter & Dart'];
-  const row2 = ['IoT Architecture', 'Arduino C++', 'Python Data', 'Docker', 'AWS Services', 'Git Workflow', 'REST APIs'];
+  const row1 = ['HTML & CSS', 'MySQL', 'MERN Stack (Basic)', 'Git', 'PHP', 'Python', 'Dart & Flutter'];
+  const row2 = ['Problem Solving', 'Communication', 'Teamwork', 'Time Management', 'Adaptability', 'Critical Thinking'];
 
   // Duplicate for infinite marquee feel
   const duplicatedRow1 = [...row1, ...row1, ...row1];
