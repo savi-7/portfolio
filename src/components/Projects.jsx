@@ -43,7 +43,7 @@ export default function Projects() {
         <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
           <div>
             <span className="text-secondary font-mono text-sm uppercase tracking-widest mb-4 block">Selected Works</span>
-            <h2 className="text-5xl md:text-7xl font-bold font-heading uppercase tracking-tighter">Case Studies</h2>
+            <h2 className="text-5xl md:text-7xl font-bold font-heading uppercase tracking-tighter">Projects</h2>
           </div>
           <p className="text-textMuted max-w-sm text-sm uppercase tracking-widest leading-relaxed">
             A curated selection of my most demanding engineering problems, solved.

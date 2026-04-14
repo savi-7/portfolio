@@ -22,7 +22,7 @@ export default function Skills() {
     <section id="skills" ref={targetRef} className="py-32 bg-background overflow-hidden flex flex-col gap-12">
       
       <div className="container mx-auto px-6 mb-12">
-        <h2 className="text-lg font-mono text-secondary uppercase tracking-widest">Arsenal</h2>
+        <h2 className="text-lg font-mono text-secondary uppercase tracking-widest">Skills</h2>
       </div>
 
       <div className="relative w-[200vw] -left-[50vw] rotate-[-2deg] flex flex-col gap-8 md:gap-12">
