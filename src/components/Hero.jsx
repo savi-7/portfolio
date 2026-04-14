@@ -61,9 +61,9 @@ export default function Hero() {
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               transition={{ ease: [0.33, 1, 0.68, 1], duration: 1.5, delay: 0.1 }}
-              className="text-4xl md:text-[8vw] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-white/40"
+              className="text-4xl md:text-[8vw] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-white/40 uppercase"
             >
-              DIGITAL CRAFTSMAN.
+              SOFTWARE DEVELOPER.
             </motion.h2>
           </div>
         </div>
