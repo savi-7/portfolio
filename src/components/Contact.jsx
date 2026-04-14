@@ -1,77 +1,72 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Mail, Phone } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { FaLinkedin as Linkedin, FaGithub as Github } from 'react-icons/fa';
+import { Mail } from 'lucide-react';
 
 export default function Contact() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.2,
+  const containerRef = useRef(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end end"]
   });
 
-  const cards = [
-    { icon: <Mail size={24} />, label: "Email", value: "saviojoseph2581@gmail.com", link: "mailto:saviojoseph2581@gmail.com" },
-    { icon: <Phone size={24} />, label: "Phone", value: "+91 6282690165", link: "tel:+916282690165" },
-    { icon: <Linkedin size={24} />, label: "LinkedIn", value: "saviojoseph007", link: "https://linkedin.com/in/saviojoseph007" },
-    { icon: <Github size={24} />, label: "GitHub", value: "savi-7", link: "https://github.com/savi-7" }
-  ];
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [100, 0]);
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
-      {/* Bottom Gradient Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-primary/20 blur-[120px] rounded-t-full -z-10" />
+    <section id="contact" ref={containerRef} className="h-screen bg-background flex flex-col justify-end overflow-hidden pb-12 relative p-4">
+      
+      <motion.div 
+        style={{ scale, opacity, y }}
+        className="w-full bg-primary rounded-[3rem] px-6 py-24 md:py-32 flex flex-col items-center justify-center text-center relative overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-noise opacity-20 pointer-events-none mix-blend-overlay" />
+        <div className="absolute top-0 right-0 w-[50vw] h-[50vw] bg-white opacity-20 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <div className="container mx-auto px-6 md:px-12 text-center">
-        <motion.div
-           ref={ref}
-           initial={{ opacity: 0, y: 30 }}
-           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-           transition={{ duration: 0.6 }}
-           className="max-w-4xl mx-auto"
-        >
-          <h2 className="text-base font-semibold text-primary uppercase tracking-widest mb-4">Let's work together</h2>
-          <h3 className="text-4xl md:text-5xl font-heading font-bold mb-8">Got a project in mind? Let's talk.</h3>
+        <div className="relative z-10 w-full max-w-5xl">
+          <h2 className="text-6xl md:text-[8vw] leading-none font-bold font-heading text-background tracking-tighter mb-8">
+            GOT AN IDEA?
+          </h2>
           
-          <p className="text-lg text-textMuted mb-12 max-w-2xl mx-auto">
-            I'm currently open to full-time roles, internships, and freelance projects. Drop me a message or reach out through any channel below.
+          <p className="text-background/80 text-xl md:text-2xl font-medium max-w-2xl mx-auto mb-16 leading-relaxed">
+            Let's build something extraordinary together. Currently open for opportunities and challenging projects.
           </p>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {cards.map((card, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ delay: 0.2 + (i * 0.1) }}
-                className="glass-card p-6 flex flex-col items-center gap-4 hover:border-primary/40 hover:-translate-y-2 transition-all group"
-              >
-                <div className="w-12 h-12 rounded-full bg-surface border border-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shadow-glow-primary">
-                  {card.icon}
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-textMuted mb-1">{card.label}</h4>
-                  {card.link ? (
-                    <a href={card.link} target="_blank" rel="noopener noreferrer" className="text-textPrimary font-medium hover:text-primary transition-colors text-sm break-all">
-                      {card.value}
-                    </a>
-                  ) : (
-                    <span className="text-textPrimary font-medium text-sm break-all">{card.value}</span>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <a data-hoverable="true" href="mailto:saviojoseph2581@gmail.com" className="inline-block px-12 py-6 rounded-full bg-background text-white font-bold text-lg md:text-xl uppercase tracking-widest hover:scale-[1.02] hover:bg-white hover:text-background transition-all duration-300">
+            Start a Conversation
+          </a>
 
-          <motion.a
-            href="mailto:saviojoseph2581@gmail.com"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-[#5F4CD9] text-white font-bold text-lg hover:shadow-glow-primary transition-shadow cursor-pointer"
-          >
-            Send me an Email
-          </motion.a>
-        </motion.div>
-      </div>
+          <div className="mt-24 flex justify-between items-end border-t border-background/20 pt-8 text-background font-medium">
+            <div className="text-left text-sm font-mono uppercase tracking-widest hidden md:block">
+              Koovappally <br/> Kerala, IN
+            </div>
+            
+            <div className="flex gap-6 mx-auto md:mx-0">
+              <SocialLink href="https://linkedin.com/in/saviojoseph007" icon={<Linkedin size={24} />} label="LinkedIn" />
+              <SocialLink href="https://github.com/savi-7" icon={<Github size={24} />} label="GitHub" />
+              <SocialLink href="mailto:saviojoseph2581@gmail.com" icon={<Mail size={24} />} label="Email" />
+            </div>
+          </div>
+        </div>
+
+      </motion.div>
     </section>
+  );
+}
+
+function SocialLink({ href, icon, label }) {
+  return (
+    <a 
+      data-hoverable="true" 
+      href={href} 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="flex items-center gap-2 text-background/80 hover:text-background transition-colors p-2"
+      aria-label={label}
+    >
+      {icon}
+    </a>
   );
 }

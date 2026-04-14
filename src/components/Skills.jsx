@@ -1,92 +1,56 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function Skills() {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start end", "end start"]
   });
 
-  const techSkills = [
-    'HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'Express.js', 
-    'MongoDB', 'MySQL', 'PHP', 'Python', 'Flutter', 'Dart', 'Git', 'IoT/Arduino'
-  ];
+  const x1 = useTransform(scrollYProgress, [0, 1], [0, -500]);
+  const x2 = useTransform(scrollYProgress, [0, 1], [-500, 0]);
 
-  const softSkills = [
-    'Analytical Thinking', 'Problem Solving', 'Communication', 
-    'Teamwork', 'Time Management', 'Adaptability', 'Critical Thinking'
-  ];
+  const row1 = ['React Ecosystem', 'TypeScript', 'Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Flutter & Dart'];
+  const row2 = ['IoT Architecture', 'Arduino C++', 'Python Data', 'Docker', 'AWS Services', 'Git Workflow', 'REST APIs'];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { staggerChildren: 0.05 } 
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
+  // Duplicate for infinite marquee feel
+  const duplicatedRow1 = [...row1, ...row1, ...row1];
+  const duplicatedRow2 = [...row2, ...row2, ...row2];
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden">
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px] -z-10" />
+    <section id="skills" ref={targetRef} className="py-32 bg-background overflow-hidden flex flex-col gap-12">
       
-      <div className="container mx-auto px-6 md:px-12">
-        <motion.div
-           ref={ref}
-           initial="hidden"
-           animate={inView ? "visible" : "hidden"}
-           className="max-w-4xl mx-auto"
-        >
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold mb-4">What I work with</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full" />
-          </div>
+      <div className="container mx-auto px-6 mb-12">
+        <h2 className="text-lg font-mono text-secondary uppercase tracking-widest">Arsenal</h2>
+      </div>
 
-          <div className="space-y-16">
-            {/* Tech Skills */}
-            <div>
-              <h3 className="text-2xl font-heading font-semibold mb-6 text-textMuted flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-primary/50"></span>
-                Technical Skills
-              </h3>
-              <motion.div variants={containerVariants} className="flex flex-wrap gap-4">
-                {techSkills.map((skill, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    className="px-6 py-3 rounded-full border border-primary/20 bg-surface text-textPrimary hover:border-primary hover:shadow-glow-primary hover:-translate-y-1 transition-all cursor-default font-medium"
-                  >
-                    {skill}
-                  </motion.div>
-                ))}
-              </motion.div>
+      <div className="relative w-[200vw] -left-[50vw] rotate-[-2deg] flex flex-col gap-8 md:gap-12">
+        
+        {/* Marquee Row 1 */}
+        <motion.div style={{ x: x1 }} className="flex gap-8 md:gap-16 whitespace-nowrap">
+          {duplicatedRow1.map((skill, index) => (
+            <div key={index} className="flex items-center gap-8 md:gap-16">
+              <span className="text-5xl md:text-8xl font-heading font-bold text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.2)'}}>
+                {skill}
+              </span>
+              <span className="text-white/20 text-3xl">✦</span>
             </div>
-
-            {/* Soft Skills */}
-            <div>
-              <h3 className="text-2xl font-heading font-semibold mb-6 text-textMuted flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-secondary/50"></span>
-                Soft Skills
-              </h3>
-              <motion.div variants={containerVariants} className="flex flex-wrap gap-4">
-                {softSkills.map((skill, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    className="px-6 py-3 rounded-full border border-secondary/20 bg-surface text-textPrimary hover:border-secondary hover:shadow-glow-secondary hover:-translate-y-1 transition-all cursor-default font-medium"
-                  >
-                    {skill}
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-            
-          </div>
+          ))}
         </motion.div>
+
+        {/* Marquee Row 2 */}
+        <motion.div style={{ x: x2 }} className="flex gap-8 md:gap-16 whitespace-nowrap">
+          {duplicatedRow2.map((skill, index) => (
+            <div key={index} className="flex items-center gap-8 md:gap-16">
+              <span className="text-5xl md:text-8xl font-heading font-bold text-white">
+                {skill}
+              </span>
+              <span className="text-secondary text-3xl">✦</span>
+            </div>
+          ))}
+        </motion.div>
+
       </div>
     </section>
   );

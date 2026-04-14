@@ -1,121 +1,69 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
-import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const navLinks = [
-  { name: 'About', to: 'about' },
-  { name: 'Skills', to: 'skills' },
-  { name: 'Projects', to: 'projects' },
-  { name: 'Experience', to: 'experience' },
-  { name: 'Contact', to: 'contact' },
-];
-
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      // Show navbar if scrolling UP or at the very top
+      if (currentScrollY < lastScrollY || currentScrollY < 50) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
+
+  const navItems = [
+    { name: 'Works', href: '#projects' },
+    { name: 'Profile', href: '#about' },
+    { name: 'Arsenal', href: '#skills' },
+    { name: 'Contact', href: '#contact' },
+  ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'py-3 glass-nav' : 'py-5 bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        <Link
-          to="home"
-          smooth={true}
-          duration={500}
-          className="cursor-pointer group flex items-center gap-3"
+    <AnimatePresence>
+      {isVisible && (
+        <motion.nav
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          exit={{ y: -100 }}
+          transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
+          className="fixed top-0 left-0 right-0 z-50 py-6"
         >
-          <div className="w-10 h-10 rounded-full border border-primary/40 flex items-center justify-center bg-primary/10 group-hover:shadow-glow-primary transition-all duration-300">
-            <span className="font-heading font-bold text-primary text-lg">SJ</span>
-          </div>
-          <span className="font-heading font-semibold text-lg hover:text-primary transition-colors hidden sm:block">
-            Savio
-          </span>
-        </Link>
+          <div className="container mx-auto px-6 flex justify-between items-center">
+            
+            <a data-hoverable="true" href="#home" className="text-2xl font-bold font-heading mix-blend-difference text-white">
+              S.J
+            </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex gap-8">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.to}
-              smooth={true}
-              duration={500}
-              spy={true}
-              activeClass="text-primary font-medium"
-              className="text-textMuted hover:text-textPrimary cursor-pointer text-sm uppercase tracking-wider transition-colors"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Mobile Nav Toggle */}
-        <button
-          className="md:hidden text-textPrimary hover:text-primary transition-colors"
-          onClick={() => setIsOpen(true)}
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-      </div>
-
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40"
-              onClick={() => setIsOpen(false)}
-            />
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-3/4 max-w-sm bg-surface z-50 border-l border-primary/20 p-8 flex flex-col shadow-2xl"
-            >
-              <div className="flex justify-end">
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="text-textMuted hover:text-primary transition-colors"
-                  aria-label="Close menu"
+            <div className="hidden md:flex gap-1 items-center bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-2 py-2 mix-blend-difference text-white">
+              {navItems.map((item, i) => (
+                <a 
+                  key={i}
+                  data-hoverable="true"
+                  href={item.href}
+                  className="px-6 py-2 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors"
                 >
-                  <X size={24} />
-                </button>
-              </div>
-              <nav className="flex flex-col gap-6 mt-12">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.to}
-                    smooth={true}
-                    duration={500}
-                    onClick={() => setIsOpen(false)}
-                    className="text-textPrimary text-xl font-heading font-medium hover:text-primary transition-colors cursor-pointer"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </nav>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </header>
+                  {item.name}
+                </a>
+              ))}
+            </div>
+
+            <a data-hoverable="true" href="mailto:saviojoseph2581@gmail.com" className="font-mono text-xs uppercase tracking-widest mix-blend-difference text-white hover:opacity-50 transition-opacity">
+              Let's Talk
+            </a>
+
+          </div>
+        </motion.nav>
+      )}
+    </AnimatePresence>
   );
 }
