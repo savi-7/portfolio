@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone } from 'lucide-react';
 import { FaLinkedin as Linkedin, FaGithub as Github } from 'react-icons/fa';
