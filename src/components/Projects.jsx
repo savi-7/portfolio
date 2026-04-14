@@ -14,7 +14,7 @@ export default function Projects() {
       subtitle: 'Smart Timber E-Commerce',
       description: 'Manages product listings, inventory tracking, cart, orders, and secure checkout workflows. Integrates ML-based similar product recommendation to enhance customer shopping experience.',
       stack: ['MongoDB', 'Express.js', 'React', 'Node.js', 'Machine Learning'],
-      image: 'https://images.unsplash.com/photo-1549643276-fdf2bf572fa5?q=80&w=2600&auto=format&fit=crop',
+      image: '/jc-timbers.png',
       githubLink: 'https://github.com/savi-7/JC-Timbers',
       webLink: 'https://jc-timbers-indol.vercel.app/'
     },
